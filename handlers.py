@@ -138,6 +138,13 @@ class RegisteredOnlyHandler(Basehandler):
 			self.finish()
 
 
+class ApiUsershandler(Basehandler):
+	async def get(self):
+		resp = await self.find_users()
+		usr = self.map_doc_to_dto(self.current_user)
+		self.write( { "current_user": usr, "users": resp } )
+
+
 class MainHandler(Basehandler):
 	async def get(self):
 		resp = await self.find_users()
@@ -148,10 +155,6 @@ class MainHandler(Basehandler):
 			uid = str(self.current_user["_id"] )
 
 		self.render("index.html", users = resp, current_username = self.current_username, cur_uid = uid )
-
-	async def post(self):
-		resp = await self.find_users()
-		self.write( { "current_user": self.current_user, "users": resp } )
 
 
 class RegisterHandler(Basehandler):
