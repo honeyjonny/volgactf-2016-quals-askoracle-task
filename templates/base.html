@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="{{ static_url("css/bootstrap.min.css") }}">
+	<title>{% block title %} Secure Notes App {% end %}</title>
+</head>
+<body>
+	<div class="container">
+		<div style="max-width: 640px;  padding: 15px;  margin: 0 auto;">
+
+		{% block nav %}
+			<ul class="nav nav-tabs" role="tablist">
+				{% if current_username != None %}
+					<li role="presentation" style="float: left;"><h5><span class="label label-success">{{current_username}}</span></h5></li>
+					<li role="presentation" style="float: right;"><a href="/logout">Logout</a></li>
+					{% if cur_uid != None %}									
+						<li role="presentation" style="float: right;"><a href="/home/{{cur_uid}}">My Notes</a></li>
+					{% end %}
+					<li role="presentation" style="float: right;"><a href="/">Main</a></li>						
+				{% end %}
+
+				{% if current_username == None %}
+					<li role="presentation" style="float: right;"><a href="/login">Login</a></li>
+					<li role="presentation" style="float: right;"><a href="/register">Register</a></li>
+				{% end %}
+		    </ul>
+		{% end %}
+
+		{% block body %}
+
+		{% end %}
+		</div>
+	</div>
+</body>
+</html>

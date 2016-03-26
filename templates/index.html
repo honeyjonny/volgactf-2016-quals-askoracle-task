@@ -1,0 +1,24 @@
+
+{% extends "base.html" %}
+
+{% block body %}
+
+	<h2>Truly crypto notes!</h2>
+
+	<div style="margin-top: 10px">
+		<h3><span class="label label-info">Trust us your sensitive information!</span> </h3>	
+	</div>
+
+	<div style="margin-top: 60px">
+		<span class="label label-primary">Peoples who already trusted:</span>	
+
+		<ul class="list-group" style="margin-top: 20px">
+		{% for user in users %}
+			{% if "name" in user %}
+			<li class="list-group-item">{{ user["name"] }}</li>
+			{% end %}
+		{% end %}
+		</ul>
+	</div>
+
+{% end %}
