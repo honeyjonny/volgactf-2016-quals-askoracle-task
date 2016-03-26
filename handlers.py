@@ -91,7 +91,7 @@ class Basehandler(tornado.web.RequestHandler, MongoDbModelsMiddleware):
 
 		userDto = user
 		salt = self.application.SALT
-		
+
 		digest = sha512()
 		digest.update(userDto["name"].encode("utf-8"))
 		#digest.update(userDto["pass"].encode("utf-8"))
@@ -162,6 +162,12 @@ class RegisterHandler(Basehandler):
 		username = self.get_argument( "username" )
 		password = self.get_argument( "password" )
 
+		if (len(username) > 256) or (len(password)>256):
+			self.set_status(400)
+			self.write({"error":"do you really need so long nickname or password? lol"})
+			self.finish()
+			return
+
 		cursor = await self.find_user_byname(username)
 		count = cursor.count()
 
@@ -187,6 +193,12 @@ class LoginHandler(Basehandler):
 
 		username = self.get_argument( "username" )
 		password = self.get_argument( "password" )
+
+		if (len(username) > 256) or (len(password)>256):
+			self.set_status(400)
+			self.write({"error":"ahahaha, off mark. lol"})
+			self.finish()
+			return
 		
 		usr = {"name":username, "pass": password}
 
@@ -260,10 +272,18 @@ class NotesHandler(RegisteredOnlyHandler):
 
 		noteContent = self.get_argument( "noteContent" )
 
-		if noteContent == None or len(noteContent) == 0:
+		if (noteContent == None) or (len(noteContent) == 0):
 			self.set_status(307)
 			self.write( { "error": "form invalid" } )	
 			self.redirect(url)
+			return
+
+		if len(noteContent) > 256:
+			self.set_status(307)
+			self.write( { "error": "too many words, brrr" } )	
+			self.finish()
+			return			
+
 
 		key, iv = await self.generate_key_iv_for_usr_async(self.current_user)
 
