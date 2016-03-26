@@ -141,7 +141,10 @@ class RegisteredOnlyHandler(Basehandler):
 class ApiUsershandler(Basehandler):
 	async def get(self):
 		resp = await self.find_users()
-		usr = self.map_doc_to_dto(self.current_user)
+		if self.current_user:
+			usr = self.map_doc_to_dto(self.current_user)
+		else:
+			usr = "none"
 		self.write( { "current_user": usr, "users": resp } )
 
 
