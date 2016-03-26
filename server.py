@@ -34,9 +34,9 @@ class Application(tornado.web.Application):
             (r"/login", LoginHandler),
             (r"/logout", Logouthandler),
             (r"/home/([\w]{24})", NotesHandler),
-            (r"/notes/([\w]{24})/([\w]+)", NotesDecryptHandler),
+            (r"/notes/([\w]{24})/([\w]{7,4056})", NotesDecryptHandler),
             (r"/api/users", ApiUsershandler),
-            (r"/(.*)", tornado.web.StaticFileHandler, {"path", "./static/"}),
+            (r"/(.*)", tornado.web.StaticFileHandler),
         ]
 
         settings = dict(
