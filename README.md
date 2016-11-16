@@ -1,9 +1,13 @@
+### Description:
+---
 
-simple site for secure notes storing.
+This is a service (task) for [VolgaCTF 2016 Quals](https://volgactf.ru/) competition.
 
-but, with padding oracle attack possibilities.
+Application is simple site for secure notes storing.
 
-use it for education purposes only.
+But, with padding oracle attack possibilities.
+
+Use it for education purposes only.
 
 
 application use:
